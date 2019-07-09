@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<ruleset name="MSID::AppName Coding Standard">
+    <description>The coding standard for MSID::AppName.</description>
+    <rule ref="PSR2"/>
+</ruleset>
