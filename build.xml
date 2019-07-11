@@ -5,7 +5,6 @@
     <property name="phpcs"   value="${basedir}/vendor/bin/phpcs"/>
     <property name="phploc"  value="${basedir}/vendor/bin/phploc"/>
     <property name="phpmd"   value="${basedir}/vendor/bin/phpmd"/>
-    <!--<property name="phpunit" value="${basedir}/vendor/bin/phpunit"/>-->
     <property name="php-testability" value="${basedir}/vendor/bin/testability"/>
     <property name="codecept" value="${basedir}/vendor/bin/codecept"/>
     <property name="behat" value="${basedir}/vendor/bin/behat"/>
@@ -195,36 +194,10 @@
         <property name="phpcpd.done" value="true"/>
     </target>
 
-    <!--<target name="phpunit" unless="phpunit.done" depends="prepare" description="Run unit tests with PHPUnit">
-        <exec executable="${phpunit}" resultproperty="result.phpunit" taskname="phpunit">
-            <arg value="&#45;&#45;configuration"/>
-            <arg path="${basedir}/phpunit.xml"/>
-            <arg value="&#45;&#45;debug"/>
-        </exec>
-        <property name="phpunit.done" value="true"/>
-    </target>
-    <target name="phpunit-no-coverage" unless="phpunit.done" depends="prepare" description="Run unit tests with PHPUnit (without generating code coverage reports)">
-        <exec executable="${phpunit}" failonerror="true" taskname="phpunit">
-            <arg value="&#45;&#45;configuration"/>
-            <arg path="${basedir}/build/phpunit.xml"/>
-            <arg value="&#45;&#45;no-coverage"/>
-        </exec>
-        <property name="phpunit.done" value="true"/>
-    </target>
-    <target name="-check-failure">
-        <fail message="PHPUnit did not finish successfully">
-            <condition>
-                <not>
-                    <equals arg1="${result.phpunit}" arg2="0"/>
-                </not>
-            </condition>
-        </fail>
-    </target>-->
-
     <target name="unit" description="Run unit tests with Codecept">
         <exec executable="${codecept}" resultproperty="true" taskname="unit">
             <arg value="run"/>
-            <!--<arg value="unit"/>-->
+            <arg value="unit"/>
             <!--<arg value="&#45;&#45;coverage"/>-->
             <arg value="--coverage-xml"/>
             <arg value="--coverage-html"/>

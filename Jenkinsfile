@@ -24,5 +24,5 @@ node {
         reportFiles: 'report.html',
         reportName: 'Codecept HTML Report',
         reportTitles: ''
-        ])
+    ])
 }
