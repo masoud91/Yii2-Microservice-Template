@@ -1,0 +1,30 @@
+{
+    "require": {
+        "php": ">=7.2",
+        "yiisoft/yii2": "~2.0.0",
+        "yiisoft/yii2-mongodb": "@stable",
+        "ext-mongodb": "*",
+        "ext-exif": "*",
+        "yiisoft/yii2-imagine": "~2.0.0",
+        "guzzlehttp/guzzle": ">=4.1.4 <7.0",
+        "linslin/yii2-curl": "*"
+    },
+    "require-dev": {
+        "codeception/verify": "~0.3.1",
+        "phploc/phploc": "^5.0",
+        "pdepend/pdepend": "^2.5",
+        "phpmd/phpmd": "^2.6",
+        "sebastian/phpcpd": "^4.1",
+        "codeception/codeception": "^3.0",
+        "squizlabs/php_codesniffer": "3.*",
+        "edsonmedina/php_testability": "dev-master"
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

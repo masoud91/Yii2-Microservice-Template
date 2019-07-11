@@ -1,0 +1,121 @@
+<?php
+$coverage = new SebastianBergmann\CodeCoverage\CodeCoverage;
+$coverage->setData(array (
+  '/var/www/html/msid-template/models/Hello.php' => 
+  array (
+    29 => 
+    array (
+      0 => 'HelloTest::testHelloModel',
+    ),
+    30 => NULL,
+    38 => 
+    array (
+      0 => 'HelloTest::testHelloModel',
+    ),
+    44 => NULL,
+    53 => 
+    array (
+      0 => 'HelloTest::testHelloModel',
+    ),
+    62 => 
+    array (
+      0 => 'HelloTest::testHelloModel',
+    ),
+    63 => 
+    array (
+      0 => 'HelloTest::testHelloModel',
+    ),
+    65 => NULL,
+    73 => 
+    array (
+    ),
+    74 => 
+    array (
+    ),
+    75 => 
+    array (
+    ),
+    76 => 
+    array (
+    ),
+    77 => 
+    array (
+    ),
+    79 => NULL,
+    87 => 
+    array (
+      0 => 'HelloTest::testHelloModel',
+    ),
+    89 => NULL,
+    97 => 
+    array (
+      0 => 'HelloTest::testHelloModel',
+    ),
+    98 => 
+    array (
+      0 => 'HelloTest::testHelloModel',
+    ),
+    100 => 
+    array (
+      0 => 'HelloTest::testHelloModel',
+    ),
+    101 => 
+    array (
+      0 => 'HelloTest::testHelloModel',
+    ),
+    105 => NULL,
+  ),
+  '/var/www/html/msid-template/controllers/HelloController.php' => 
+  array (
+    14 => 
+    array (
+    ),
+    15 => 
+    array (
+    ),
+    16 => 
+    array (
+    ),
+    17 => 
+    array (
+    ),
+    18 => 
+    array (
+    ),
+    24 => 
+    array (
+    ),
+    25 => 
+    array (
+    ),
+    26 => 
+    array (
+    ),
+    32 => 
+    array (
+    ),
+    33 => 
+    array (
+    ),
+  ),
+));
+$coverage->setTests(array (
+  'HelloTest::testHelloModel' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'UNCOVERED_FILES_FROM_WHITELIST' => 
+  array (
+    'size' => 'unknown',
+    'status' => -1,
+  ),
+));
+
+$filter = $coverage->filter();
+$filter->setWhitelistedFiles(array (
+  '/var/www/html/msid-template/models/Hello.php' => true,
+  '/var/www/html/msid-template/controllers/HelloController.php' => true,
+));
+
+return $coverage;

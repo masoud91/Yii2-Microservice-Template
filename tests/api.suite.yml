@@ -1,0 +1,7 @@
+actor: ApiTester
+modules:
+    enabled:
+        - REST:
+            url: http://localhost/msid-template/web/
+            depends: PhpBrowser
+            part: Json
