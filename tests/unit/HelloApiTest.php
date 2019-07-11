@@ -3,24 +3,21 @@
 use Codeception\Util\Debug;
 use micro\models\Hello;
 
-class HelloTest extends \Codeception\Test\Unit
+class HelloApiTest extends \Codeception\Test\Unit
 {
     /**
      * @var UnitTester
      */
     protected $tester;
     
-    protected function _before()
-    {
+    protected function _before() {
     }
 
-    protected function _after()
-    {
+    protected function _after() {
     }
 
     // tests
-    public function testHelloModel()
-    {
+    public function testHelloModel() {
         Debug::debug('we can print debug notes like this. but run codecept wit --debug flag to show it');
 
         $I = $this->tester;
@@ -28,6 +25,7 @@ class HelloTest extends \Codeception\Test\Unit
         $model = new Hello();
         $model->name = 'world';
         $model->save();
+
 
         $I->assertEquals('world', $model->name);
 
