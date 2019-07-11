@@ -16,7 +16,7 @@ node {
         sh 'ant full-build'
     }
 
-    publishHTML([
+    publishHTML(target: [
         allowMissing: false,
         alwaysLinkToLastBuild: false,
         keepAll: false,
