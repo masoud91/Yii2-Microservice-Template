@@ -225,9 +225,9 @@
         <exec executable="${codecept}" resultproperty="true" taskname="unit">
             <arg value="run"/>
             <!--<arg value="unit"/>-->
-            <arg value="--coverage"/>
-            <!--<arg value="&#45;&#45;coverage-xml"/>-->
-            <!--<arg value="&#45;&#45;coverage-html"/>-->
+            <!--<arg value="&#45;&#45;coverage"/>-->
+            <arg value="--coverage-xml"/>
+            <arg value="--coverage-html"/>
         </exec>
     </target>
 

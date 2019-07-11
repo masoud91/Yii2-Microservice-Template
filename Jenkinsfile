@@ -15,4 +15,14 @@ node {
     stage('Run Test Steps') {
         sh 'ant full-build'
     }
+
+    publishHTML([
+        allowMissing: false,
+        alwaysLinkToLastBuild: false,
+        keepAll: false,
+        reportDir: 'tests/_output/',
+        reportFiles: 'report.html',
+        reportName: 'Codecept HTML Report',
+        reportTitles: ''
+        ])
 }
