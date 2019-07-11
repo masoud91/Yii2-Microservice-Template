@@ -54,15 +54,7 @@
     <target name="lint" unless="lint.done" description="Perform syntax check of sourcecode files">
         <apply executable="php" taskname="lint">
             <arg value="-l"/>
-            <!--<fileset dir="${basedir}/app">-->
-                <!--<include name="**/*.php"/>-->
-                <!--<modified/>-->
-            <!--</fileset>-->
             <fileset dir="${basedir}/tests">
-                <include name="**/*.php"/>
-                <modified/>
-            </fileset>
-            <fileset dir="${basedir}/activeRecord">
                 <include name="**/*.php"/>
                 <modified/>
             </fileset>
@@ -82,7 +74,7 @@
                 <include name="**/*.php"/>
                 <modified/>
             </fileset>
-            <fileset dir="${basedir}/web">
+            <fileset dir="${basedir}/tests">
                 <include name="**/*.php"/>
                 <modified/>
             </fileset>
@@ -93,7 +85,6 @@
     <target name="phploc" unless="phploc.done" description="Measure project size using PHPLOC and print human readable output. Intended for usage on the command line.">
         <exec executable="${phploc}" taskname="phploc">
             <arg value="--count-tests"/>
-            <arg path="${basedir}/activeRecord"/>
             <arg path="${basedir}/components"/>
             <arg path="${basedir}/controllers"/>
             <arg path="${basedir}/exceptions"/>
@@ -110,7 +101,6 @@
             <arg path="${basedir}/build/logs/phploc.csv"/>
             <arg value="--log-xml"/>
             <arg path="${basedir}/build/logs/phploc.xml"/>
-            <arg path="${basedir}/activeRecord"/>
             <arg path="${basedir}/components"/>
             <arg path="${basedir}/controllers"/>
             <arg path="${basedir}/exceptions"/>
@@ -186,7 +176,6 @@
             <arg value="--standard=PSR2"/>
             <arg value="--extensions=php"/>
             <arg value="--ignore=autoload.php"/>
-            <arg path="${basedir}/activeRecord"/>
             <arg path="${basedir}/components"/>
             <arg path="${basedir}/controllers"/>
             <arg path="${basedir}/exceptions"/>
@@ -207,7 +196,6 @@
         <exec executable="${phpcpd}" taskname="phpcpd">
             <arg value="--log-pmd"/>
             <arg path="${basedir}/build/logs/pmd-cpd.xml"/>
-            <arg path="${basedir}/activeRecord"/>
             <arg path="${basedir}/components"/>
             <arg path="${basedir}/controllers"/>
             <arg path="${basedir}/exceptions"/>
@@ -246,7 +234,7 @@
     <target name="unit" description="Run unit tests with Codecept">
         <exec executable="${codecept}" resultproperty="true" taskname="unit">
             <arg value="run"/>
-            <arg value="unit"/>
+            <!--<arg value="unit"/>-->
             <arg value="--coverage"/>
             <!--<arg value="&#45;&#45;coverage-xml"/>-->
             <!--<arg value="&#45;&#45;coverage-html"/>-->
