@@ -22,7 +22,7 @@ node {
         keepAll: false,
         reportDir: 'tests/_output/',
         reportFiles: 'report.html',
-        reportName: 'Codecept HTML Report',
+        reportName: 'HTML Report',
         reportTitles: ''
-    ])
+     ])
 }
