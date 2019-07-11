@@ -66,10 +66,6 @@
                 <include name="**/*.php"/>
                 <modified/>
             </fileset>
-            <fileset dir="${basedir}/exceptions">
-                <include name="**/*.php"/>
-                <modified/>
-            </fileset>
             <fileset dir="${basedir}/models">
                 <include name="**/*.php"/>
                 <modified/>
@@ -87,7 +83,6 @@
             <arg value="--count-tests"/>
             <arg path="${basedir}/components"/>
             <arg path="${basedir}/controllers"/>
-            <arg path="${basedir}/exceptions"/>
             <arg path="${basedir}/models"/>
             <arg path="${basedir}/tests"/>
         </exec>
@@ -103,7 +98,6 @@
             <arg path="${basedir}/build/logs/phploc.xml"/>
             <arg path="${basedir}/components"/>
             <arg path="${basedir}/controllers"/>
-            <arg path="${basedir}/exceptions"/>
             <arg path="${basedir}/models"/>
             <arg path="${basedir}/tests"/>
         </exec>
@@ -126,7 +120,7 @@
             unless="phpmd.done"
             description="Perform project mess detection using PHPMD and print human readable output. Intended for usage on the command line before committing.">
         <exec executable="${phpmd}" taskname="phpmd">
-            <arg path="${basedir}/activeRecord,${basedir}/components,${basedir}/controllers,${basedir}/exceptions,${basedir}/models"/>
+            <arg path="${basedir}/components,${basedir}/controllers,${basedir}/models"/>
             <arg value="text"/>
             <arg path="${basedir}/build/phpmd.xml"/>
         </exec>
@@ -134,7 +128,7 @@
     </target>
     <target name="phpmd-ci" unless="phpmd.done" depends="prepare" description="Perform project mess detection using PHPMD and log result in XML format. Intended for usage within a continuous integration environment.">
         <exec executable="${phpmd}" taskname="phpmd">
-            <arg path="${basedir}/activeRecord,${basedir}/components,${basedir}/controllers,${basedir}/exceptions,${basedir}/models"/>
+            <arg path="${basedir}/components,${basedir}/controllers,${basedir}/models"/>
             <arg value="xml"/>
             <arg path="${basedir}/build/phpmd.xml"/>
             <arg value="--reportfile"/>
@@ -148,10 +142,8 @@
             <arg value="--standard=PSR2"/>
             <arg value="--extensions=php"/>
             <arg value="--ignore=autoload.php"/>
-            <arg path="${basedir}/activeRecord"/>
             <arg path="${basedir}/components"/>
             <arg path="${basedir}/controllers"/>
-            <arg path="${basedir}/exceptions"/>
             <arg path="${basedir}/models"/>
             <arg path="${basedir}/tests"/>
         </exec>
@@ -178,7 +170,6 @@
             <arg value="--ignore=autoload.php"/>
             <arg path="${basedir}/components"/>
             <arg path="${basedir}/controllers"/>
-            <arg path="${basedir}/exceptions"/>
             <arg path="${basedir}/models"/>
             <arg path="${basedir}/tests"/>
         </exec>
@@ -198,7 +189,6 @@
             <arg path="${basedir}/build/logs/pmd-cpd.xml"/>
             <arg path="${basedir}/components"/>
             <arg path="${basedir}/controllers"/>
-            <arg path="${basedir}/exceptions"/>
             <arg path="${basedir}/models"/>
             <arg path="${basedir}/tests"/>
         </exec>
