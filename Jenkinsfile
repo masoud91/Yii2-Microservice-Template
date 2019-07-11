@@ -13,6 +13,6 @@ node {
     }
 
     stage('Run Test Steps') {
-        sh './vendor/bin/codecept run'
+        sh 'ant full-build'
     }
 }
