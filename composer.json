@@ -1,4 +1,13 @@
 {
+    "name": "infinitydesign/msid-template",
+    "description": "IDCO Microservice app template",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Masoud Aghaei",
+            "email": "masoud@idco.io"
+        }
+    ],
     "require": {
         "php": ">=7.2",
         "yiisoft/yii2": "~2.0.0",
