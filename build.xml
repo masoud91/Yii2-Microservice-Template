@@ -198,6 +198,8 @@
         <exec executable="${codecept}" resultproperty="true" taskname="unit">
             <arg value="run"/>
             <arg value="unit"/>
+            <arg value="--html"/>
+            <arg value="--xml"/>
             <!--<arg value="&#45;&#45;coverage"/>-->
             <arg value="--coverage-xml"/>
             <arg value="--coverage-html"/>
