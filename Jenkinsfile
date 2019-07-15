@@ -28,14 +28,14 @@ node {
         ])
 
         publishHTML(target: [
-                    allowMissing: false,
-                    alwaysLinkToLastBuild: false,
-                    keepAll: false,
-                    reportDir: 'tests/_output/coverage/',
-                    reportFiles: 'dashboard.html',
-                    reportName: 'Codeception Coverage',
-                    reportTitles: 'Codeception Coverage'
-                ])
+            allowMissing: false,
+            alwaysLinkToLastBuild: false,
+            keepAll: false,
+            reportDir: 'tests/_output/coverage/',
+            reportFiles: 'dashboard.html',
+            reportName: 'Codeception Coverage',
+            reportTitles: 'Codeception Coverage'
+        ])
     }
 
     stage('Generate Documentation') {
