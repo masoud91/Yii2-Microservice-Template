@@ -20,9 +20,9 @@ node {
         allowMissing: false,
         alwaysLinkToLastBuild: false,
         keepAll: false,
-        reportDir: 'tests/_output/',
+        reportDir: '/tests/_output/',
         reportFiles: 'report.html',
         reportName: 'HTML Report',
         reportTitles: ''
-     ])
+    ])
 }
