@@ -23,8 +23,32 @@ node {
             keepAll: false,
             reportDir: 'tests/_output/',
             reportFiles: 'report.html',
-            reportName: 'HTML Report',
-            reportTitles: ''
+            reportName: 'Codeception Report',
+            reportTitles: 'Codeception Report'
+        ])
+
+        publishHTML(target: [
+                    allowMissing: false,
+                    alwaysLinkToLastBuild: false,
+                    keepAll: false,
+                    reportDir: 'tests/_output/coverage/',
+                    reportFiles: 'dashboard.html',
+                    reportName: 'Codeception Coverage',
+                    reportTitles: 'Codeception Coverage'
+                ])
+    }
+
+    stage('Generate Documentation') {
+        sh 'raml2html docs/api.raml > docs/_output/index.php'
+
+        publishHTML(target: [
+            allowMissing: false,
+            alwaysLinkToLastBuild: false,
+            keepAll: false,
+            reportDir: 'docs/_output/',
+            reportFiles: 'index.html',
+            reportName: 'RAML Documentation',
+            reportTitles: 'RAML Documentation'
         ])
     }
 }
