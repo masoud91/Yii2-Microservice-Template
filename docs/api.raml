@@ -1,0 +1,43 @@
+#%RAML 1.0
+title: MSID
+version: v1
+protocols: [http, https]
+mediaType: [application/json]
+baseUri: http://localhost/msid-template/web/
+
+securitySchemes:
+  oauth_2_0: !include ./securitySchemes/oauth_2_0.raml
+securedBy: [oauth_2_0]
+
+types:
+  Message:
+    type: object
+    example: |
+     {
+        "message": ""
+     }
+
+  Validation:
+    type: array
+    example: |
+      [
+        {
+          "field": "",
+          "message": ""
+        }
+      ]
+
+/hello:
+ /world:
+  get:
+    responses:
+     200:
+       body:
+        application/json:
+          properties:
+            foo:
+              type: string
+              example: |
+                {
+                  "foo": "bar"
+                }
