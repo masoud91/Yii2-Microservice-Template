@@ -39,7 +39,7 @@ node {
     }
 
     stage('Generate Documentation') {
-        sh 'raml2html docs/api.raml > docs/_output/index.php'
+        sh 'raml2html docs/api.raml > docs/_output/index.html'
 
         publishHTML(target: [
             allowMissing: false,
