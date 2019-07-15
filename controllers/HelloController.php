@@ -2,7 +2,6 @@
 
 namespace micro\controllers;
 
-use micro\models\Hello;
 use yii\rest\Controller;
 
 class HelloController extends Controller
@@ -25,10 +24,4 @@ class HelloController extends Controller
         return ['foo' => 'bar'];
     }
 
-    /**
-     * @return array
-     */
-    public function actionTest(){
-        return ['foo' => (new Hello())->foo()];
-    }
 }

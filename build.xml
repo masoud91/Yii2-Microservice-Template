@@ -200,7 +200,6 @@
             <arg value="unit"/>
             <arg value="--html"/>
             <arg value="--xml"/>
-            <!--<arg value="&#45;&#45;coverage"/>-->
             <arg value="--coverage-xml"/>
             <arg value="--coverage-html"/>
         </exec>
