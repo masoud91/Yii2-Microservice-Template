@@ -16,13 +16,15 @@ node {
         sh 'ant full-build'
     }
 
-    publishHTML(target: [
-        allowMissing: false,
-        alwaysLinkToLastBuild: false,
-        keepAll: false,
-        reportDir: 'tests/_output/',
-        reportFiles: 'report.html',
-        reportName: 'HTML Report',
-        reportTitles: ''
-    ])
+    stage('Publish Reports') {
+        publishHTML(target: [
+            allowMissing: false,
+            alwaysLinkToLastBuild: false,
+            keepAll: false,
+            reportDir: 'tests/_output/',
+            reportFiles: 'report.html',
+            reportName: 'HTML Report',
+            reportTitles: ''
+        ])
+    }
 }
