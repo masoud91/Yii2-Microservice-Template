@@ -18,7 +18,8 @@ node {
 
     stage('Publish Reports') {
 
-        CloverPublisher([
+        step([
+            $class: 'CloverPublisher',
             cloverReportDir: 'build/logs/',
             cloverReportFileName: 'clover.xml',
             healthyTarget: [methodCoverage: 70, conditionalCoverage: 80, statementCoverage: 80], // optional, default is: method=70, conditional=80, statement=80
