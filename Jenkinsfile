@@ -84,6 +84,11 @@ node {
             title: 'C - Average Length',
             yaxis: 'Average Lines of Code'
         ])
+
+        step([
+            $class: 'hudson.plugins.checkstyle.CheckStylePublisher',
+            checkstyle: 'build/logs/checkstyle.xml'
+        ])
     }
 
     stage('Generate Documentation') {
