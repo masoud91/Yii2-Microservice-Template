@@ -16,13 +16,6 @@ node {
         sh 'ant full-build'
     }
 
-    stage('Code Analyses Reports') {
-        step([
-            $class: 'hudson.plugins.checkstyle.CheckStylePublisher',
-            checkstyle: 'build/logs/checkstyle.xml'
-        ])
-    }
-
     stage('Test & Coverage Reports') {
         step([
             $class: 'CloverPublisher',
@@ -51,6 +44,13 @@ node {
             reportFiles: 'dashboard.html',
             reportName: 'Codeception Coverage',
             reportTitles: 'Codeception Coverage'
+        ])
+    }
+
+    stage('Code Analyses Reports') {
+        step([
+            $class: 'hudson.plugins.checkstyle.CheckStylePublisher',
+            checkstyle: 'build/logs/checkstyle.xml'
         ])
     }
 
