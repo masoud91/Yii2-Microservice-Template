@@ -37,7 +37,7 @@ node {
             reportTitles: 'Codeception Coverage'
         ])
 
-        plot
+        plot([
             csvFileName: 'plot-64172a89-b292-479a-aee3-f3506437f0fc.csv',
             csvSeries: [[
                 displayTableFlag: false,
@@ -50,6 +50,7 @@ node {
             numBuilds: '100',
             style: 'line',
             title: 'A - Lines of code', yaxis: 'Lines of Code'
+        ])
     }
 
     stage('Generate Documentation') {
