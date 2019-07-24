@@ -48,10 +48,8 @@ node {
     }
 
     stage('Code Analyses Reports') {
-        step([
-            $class: 'hudson.plugins.checkstyle.CheckStylePublisher',
-            checkstyle: 'build/logs/checkstyle.xml'
-        ])
+        checkstyle pattern: 'build/logs/checkstyle.xml'
+        pmd canRunOnFailed: true, pattern: 'build/logs/pmd.xml'
     }
 
     stage('Draw Plots') {
