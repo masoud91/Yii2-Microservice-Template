@@ -36,6 +36,20 @@ node {
             reportName: 'Codeception Coverage',
             reportTitles: 'Codeception Coverage'
         ])
+
+        plot
+            csvFileName: 'plot-64172a89-b292-479a-aee3-f3506437f0fc.csv',
+            csvSeries: [[
+                displayTableFlag: false,
+                exclusionValues: 'Lines of Code (LOC),Comment Lines of Code (CLOC),Non-Comment Lines of Code (NCLOC),Logical Lines of Code (LLOC)',
+                file: 'build/logs/phploc.csv',
+                inclusionFlag: 'INCLUDE_BY_STRING',
+                url: ''
+            ]],
+            group: 'phploc',
+            numBuilds: '100',
+            style: 'line',
+            title: 'A - Lines of code', yaxis: 'Lines of Code'
     }
 
     stage('Generate Documentation') {
