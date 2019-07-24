@@ -50,6 +50,7 @@ node {
     stage('Code Analyses Reports') {
         checkstyle pattern: 'build/logs/checkstyle.xml'
         pmd canRunOnFailed: true, pattern: 'build/logs/pmd.xml'
+        dry canRunOnFailed: true, pattern: 'build/logs/pmd-cpd.xml'
     }
 
     stage('Draw Plots') {
