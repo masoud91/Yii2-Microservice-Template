@@ -41,7 +41,7 @@ node {
             csvFileName: 'plot-64172a89-b292-479a-aee3-f3506437f0fc.csv',
             csvSeries: [[
                 displayTableFlag: false,
-                exclusionValues: 'Lines of Code (LOC),Comment Lines of Code (CLOC),Non-Comment Lines of Code (NCLOC),Logical Lines of Code (LLOC)',
+                exclusionValues: 'Lines of Code (LOC), Comment Lines of Code (CLOC), Non-Comment Lines of Code (NCLOC), Logical Lines of Code (LLOC)',
                 file: 'build/logs/phploc.csv',
                 inclusionFlag: 'INCLUDE_BY_STRING',
                 url: ''
@@ -49,7 +49,40 @@ node {
             group: 'phploc',
             numBuilds: '100',
             style: 'line',
-            title: 'A - Lines of code', yaxis: 'Lines of Code'
+            title: 'A - Lines of code',
+            yaxis: 'Lines of Code'
+        ])
+
+        plot([
+            csvFileName: 'plot-64172a89-b292-479a-aee3-f3506437f0fc.csv',
+            csvSeries: [[
+                displayTableFlag: false,
+                exclusionValues: 'Directories, Files, Namespaces',
+                file: 'build/logs/phploc.csv',
+                inclusionFlag: 'INCLUDE_BY_STRING',
+                url: ''
+            ]],
+            group: 'phploc',
+            numBuilds: '100',
+            style: 'line',
+            title: 'B - Structures Containers',
+            yaxis: 'Count'
+        ])
+
+        plot([
+            csvFileName: 'plot-64172a89-b292-479a-aee3-f3506437f0fc.csv',
+            csvSeries: [[
+                displayTableFlag: false,
+                exclusionValues: 'Average Class Length (LLOC), Average Method Length (LLOC), Average Function Length (LLOC)',
+                file: 'build/logs/phploc.csv',
+                inclusionFlag: 'INCLUDE_BY_STRING',
+                url: ''
+            ]],
+            group: 'phploc',
+            numBuilds: '100',
+            style: 'line',
+            title: 'C - Average Length',
+            yaxis: 'Average Lines of Code'
         ])
     }
 
