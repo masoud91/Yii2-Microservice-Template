@@ -16,7 +16,14 @@ node {
         sh 'ant full-build'
     }
 
-    stage('Clover Report') {
+    stage('Code Analyses Reports') {
+        step([
+            $class: 'hudson.plugins.checkstyle.CheckStylePublisher',
+            checkstyle: 'build/logs/checkstyle.xml'
+        ])
+    }
+
+    stage('Test & Coverage Reports') {
         step([
             $class: 'CloverPublisher',
             cloverReportDir: 'tests/_output/',
@@ -25,9 +32,6 @@ node {
             unhealthyTarget: [methodCoverage: 50, conditionalCoverage: 50, statementCoverage: 50], // optional, default is none
             failingTarget: [methodCoverage: 0, conditionalCoverage: 0, statementCoverage: 0] // optional, default is none
         ])
-    }
-
-    stage('Publish Reports') {
 
         publishHTML(target: [
             allowMissing: false,
@@ -48,6 +52,9 @@ node {
             reportName: 'Codeception Coverage',
             reportTitles: 'Codeception Coverage'
         ])
+    }
+
+    stage('Draw Plots') {
 
         plot([
             csvFileName: 'plot-64172a89-b292-479a-aee3-f3506437f0fc.csv',
