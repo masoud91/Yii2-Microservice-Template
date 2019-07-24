@@ -16,8 +16,7 @@ node {
         sh 'ant full-build'
     }
 
-    stage('Publish Reports') {
-
+    stage('Clover Report') {
         step([
             $class: 'CloverPublisher',
             cloverReportDir: 'build/logs/',
@@ -26,6 +25,9 @@ node {
             unhealthyTarget: [methodCoverage: 50, conditionalCoverage: 50, statementCoverage: 50], // optional, default is none
             failingTarget: [methodCoverage: 0, conditionalCoverage: 0, statementCoverage: 0] // optional, default is none
         ])
+    }
+
+    stage('Publish Reports') {
 
         publishHTML(target: [
             allowMissing: false,
