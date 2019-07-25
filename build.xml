@@ -125,6 +125,7 @@
         </exec>
         <property name="phpmd.done" value="true"/>
     </target>
+
     <target name="phpmd-ci" unless="phpmd.done" depends="prepare" description="Perform project mess detection using PHPMD and log result in XML format. Intended for usage within a continuous integration environment.">
         <exec executable="${phpmd}" taskname="phpmd">
             <arg path="${basedir}/components,${basedir}/controllers,${basedir}/models"/>
@@ -204,16 +205,6 @@
             <arg value="--coverage-html"/>
         </exec>
     </target>
-
-    <!--<target name="integration" description="Run through Integration Tests">
-        <echo>current directory: ${basedir}</echo>
-        <echo>current directory: ${user.dir}</echo>
-        <exec executable="${codecept}" failonerror="true" taskname="codeception">
-            <arg value="run" />
-            <arg value="&#45;&#45;steps" />
-            <arg value="&#45;&#45;xml" />
-        </exec>
-    </target>-->
 
     <!--<target name="behat" description="Run Behat Scenarios">
         <exec executable="${behat}" failonerror="true">
