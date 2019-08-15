@@ -113,6 +113,7 @@ node {
     }
 
     stage('Generate Documentation') {
+        sh 'export PATH=/usr/local/bin'
         sh 'raml2html docs/api.raml > docs/_output/index.html'
 
         publishHTML(target: [
