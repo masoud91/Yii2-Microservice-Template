@@ -113,7 +113,7 @@ node {
     }
 
     stage('Generate Documentation') {
-        sh 'export PATH=/usr/local/bin'
+        sh 'export PATH=/sbin:/usr/sbin:/bin:/usr/bin:/usr/local/bin'
         sh 'npm install raml2html'
         sh 'raml2html docs/api.raml > docs/_output/index.html'
 
