@@ -1,6 +1,6 @@
 {
     "name": "infinitydesign/msid-template",
-    "description": "IDCO Microservice app template",
+    "description": "Yii2 Microservice app template",
     "type": "library",
     "authors": [
         {
