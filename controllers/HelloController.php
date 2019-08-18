@@ -23,5 +23,4 @@ class HelloController extends Controller
     {
         return ['foo' => 'bar'];
     }
-
 }
