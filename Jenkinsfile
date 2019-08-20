@@ -125,4 +125,13 @@ node {
             reportTitles: 'RAML Documentation'
         ])
     }
+
+    stage('Build Container') {
+        /* This builds the actual image; synonymous to docker build on the command line */
+        app = docker.build("idco/msidt")
+    }
+
+    stage ('Run container') {
+        sh 'docker-compose -f docker-compose.yml up --build -d'
+    }
 }
