@@ -5,6 +5,7 @@
     <property name="phpcs"   value="${basedir}/vendor/bin/phpcs"/>
     <property name="phploc"  value="${basedir}/vendor/bin/phploc"/>
     <property name="phpmd"   value="${basedir}/vendor/bin/phpmd"/>
+    <property name="phpcbf"   value="${basedir}/vendor/bin/phpcbf"/>
     <property name="php-testability" value="${basedir}/vendor/bin/testability"/>
     <property name="codecept" value="${basedir}/vendor/bin/codecept"/>
     <property name="behat" value="${basedir}/vendor/bin/behat"/>
@@ -12,7 +13,7 @@
     <target name="full-build" depends="prepare,static-analysis,unit" description="Performs static analysis, runs the tests, and generates project documentation"/>
     <target name="full-build-parallel" depends="prepare,static-analysis-parallel,unit" description="Performs static analysis (executing the tools in parallel), runs the tests, and generates project documentation"/>
     <target name="quick-build" depends="prepare,lint" description="Performs a lint check and runs the tests (without generating code coverage reports)"/>
-    <target name="static-analysis" depends="lint,phploc-ci,pdepend,phpmd-ci,phpcs-ci,phpcpd-ci,testability" description="Performs static analysis"/>
+    <target name="static-analysis" depends="lint,phploc-ci,pdepend,phpmd-ci,phpcbf,phpcs-ci,phpcpd-ci,testability" description="Performs static analysis"/>
 
     <!--
      Adjust the threadCount attribute's value to the number of CPUs
@@ -25,6 +26,7 @@
             </sequential>
             <antcall target="lint"/>
             <antcall target="phpcpd-ci"/>
+            <antcall target="phpcbf"/>
             <antcall target="phpcs-ci"/>
             <antcall target="phploc-ci"/>
         </parallel>
@@ -137,6 +139,17 @@
         <property name="phpmd.done" value="true"/>
     </target>
 
+    <target name="phpcbf" description="To automatically fix (fixable) coding style violations">
+        <exec executable="${phpcbf}" taskname="phpcbf">
+            <arg value="--standard=build/phpcs.xml"/>
+            <arg path="${basedir}/components"/>
+            <arg path="${basedir}/controllers"/>
+            <arg path="${basedir}/models"/>
+            <arg path="${basedir}/tests"/>
+        </exec>
+        <property name="phpcs.done" value="true"/>
+    </target>
+
     <target name="phpcs" unless="phpcs.done" description="Find coding standard violations using PHP_CodeSniffer and print human readable output. Intended for usage on the command line before committing.">
         <exec executable="${phpcs}" taskname="phpcs">
             <arg value="--standard=PSR2"/>
@@ -174,13 +187,6 @@
             <arg path="${basedir}/tests"/>
         </exec>
         <property name="phpcs.done" value="true"/>
-    </target>
-
-    <target name="phpcpd" unless="phpcpd.done" description="Find duplicate code using PHPCPD and print human readable output. Intended for usage on the command line before committing.">
-        <exec executable="${phpcpd}" taskname="phpcpd">
-            <arg path="${basedir}/src"/>
-        </exec>
-        <property name="phpcpd.done" value="true"/>
     </target>
 
     <target name="phpcpd-ci" unless="phpcpd.done" depends="prepare" description="Find duplicate code using PHPCPD and log result in XML format. Intended for usage within a continuous integration environment.">
