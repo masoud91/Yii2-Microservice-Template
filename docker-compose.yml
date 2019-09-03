@@ -1,0 +1,10 @@
+# docker-compose.yml
+
+version: '2'
+
+services:
+  web:
+    build: .
+    image: idco/msidt
+    ports:
+      - "808:80"
