@@ -61,6 +61,8 @@ node {
         ])
     }
 
+    /* if (env.BRANCH_NAME == "deployment") { } */
+
     stage('Draw Plots') {
 
         plot([
