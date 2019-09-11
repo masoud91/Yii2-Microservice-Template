@@ -61,6 +61,8 @@ node {
         ])
     }
 
+    /* if (env.BRANCH_NAME == "deployment") { } */
+
     stage('Draw Plots') {
 
         plot([
@@ -124,5 +126,14 @@ node {
             reportName: 'RAML Documentation',
             reportTitles: 'RAML Documentation'
         ])
+    }
+
+    stage('Build Container') {
+        /* This builds the actual image; synonymous to docker build on the command line */
+        app = docker.build("idco/msidt")
+    }
+
+    stage ('Run container') {
+        sh 'docker-compose -f docker-compose.yml up --build -d'
     }
 }
