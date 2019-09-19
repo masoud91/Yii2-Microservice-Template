@@ -2,6 +2,6 @@ actor: ApiTester
 modules:
     enabled:
         - REST:
-            url: http://localhost/msid-template/web/
+            url: http://localhost:9090
             depends: PhpBrowser
             part: Json
