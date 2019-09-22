@@ -30,6 +30,5 @@ class HelloApiTest extends \Codeception\Test\Unit
         $I->assertEquals('world', $model->name);
 
         $I->seeRecord('micro\models\Hello', ['name' => 'world']);
-
     }
 }

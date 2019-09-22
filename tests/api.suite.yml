@@ -1,7 +1,18 @@
 actor: ApiTester
+class_name: ApiTester
+
 modules:
     enabled:
+        - Yii2
         - REST:
-            url: http://localhost/msid-template/web/
-            depends: PhpBrowser
-            part: Json
+              url: http://localhost:9090
+              depends: PhpBrowser
+              part: Json
+
+#coverage:
+#    enabled: true
+#    remote: true
+#    c3_url: 'http://127.0.0.1:9090/index-test.php/'
+#    remote_config: '../codeception.yml'
+#    include:
+#        - controllers/*
