@@ -13,11 +13,6 @@ settings:
 extensions:
     enabled:
         - Codeception\Extension\RunFailed
-coverage:
-    enabled: true
-    include:
-        - models/*
-        - controllers/*
 modules:
     config:
         Yii2:

@@ -1,14 +1,26 @@
-# Codeception Test Suite Configuration
-#
-# Suite for functional tests
-# Emulate web requests and make application process them
-# Include one of framework modules (Symfony2, Yii2, Laravel5) to use it
-# Remove this suite if you don't use frameworks
-
 actor: FunctionalTester
+class_name: FunctionalTester
+
 modules:
-    enabled:
-        # add a framework module here
-        - Yii2:
-          configFile: 'config/test.php'
-        - \Helper\Functional
+  enabled:
+    - Yii2:
+        configFile: 'config/test.php'
+        part: [orm]
+    - REST
+  config:
+    PhpBrowser:
+      url: 'localhost:9090'
+      browser: firefox
+    REST:
+      depends: PhpBrowser
+      part: Json
+
+#coverage:
+#  enabled: true
+#  remote: true
+#  c3_url: 'http://127.0.0.1:9090/index-test.php/'
+#  remote_config: '../codeception.yml'
+#  include:
+#    - models/*
+#    - components/*
+#    - controllers/*

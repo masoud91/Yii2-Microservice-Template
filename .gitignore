@@ -35,3 +35,7 @@ phpunit.phar
 /.vagrant
 
 composer.lock
+
+/tests/_output
+/runtime
+/web/assets

@@ -1,13 +1,14 @@
-# Codeception Test Suite Configuration
-#
-# Suite for unit or integration tests.
-suite_namespace: tests\unit
 actor: UnitTester
 class_name: UnitTester
+
 modules:
-    enabled:
-      - Yii2:
-          configFile: 'config/test.php'
-          part: [orm]
-      - Asserts
-      - \Helper\Unit
+  enabled:
+    - Yii2
+    - Asserts
+    - \Helper\Unit
+
+coverage:
+  enabled: true
+  include:
+    - models/*
+    - components/*
