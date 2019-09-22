@@ -13,15 +13,6 @@ settings:
 extensions:
     enabled:
         - Codeception\Extension\RunFailed
-coverage:
-    c3_url: 'http://127.0.0.1:9090/index.php/'
-    enabled: true
-    remote: true
-    remote_config: '../codeception.yml'
-    include:
-        - models/*
-        - controllers/*
-        - components/*
 modules:
     config:
         Yii2:
