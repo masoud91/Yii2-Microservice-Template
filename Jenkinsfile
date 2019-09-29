@@ -1,5 +1,12 @@
 #!groovy​
 
+def withLocalConfig(body) {
+    withCredentials([
+        [file(credentialsId: 'composer_idco_repo', variable: 'FILE')]
+    ],
+    body)
+}
+
 node {
     def app
 
@@ -12,8 +19,118 @@ node {
         sh 'composer install'
     }
 
-    stage('Run Test Steps') {
-        sh 'ant full-build'
+    stage('Build Application & Run Unit Tests') {
+        /* ws {
+            configFileProvider([configFile(fileId: 'auth_server_test', variable: 'TEST_LOCAL')]) {
+                dir ('config') {
+                    sh 'use $TEST_LOCAL'
+                }
+            }
+        } */
+
+        configFileProvider([
+            configFile(fileId: 'auth_server_test', variable: 'TEST_LOCAL')
+        ]) {
+//             sh 'echo $TEST_LOCAL > config/test-local.php'
+            sh 'mv $TEST_LOCAL config/test-local.php'
+//             sh 'use config/test_local.php'
+        }
+
+//         sh 'ant full-build'
+        sh 'ant test-unit'
+    }
+
+    stage('Code Analyses Reports') {
+        checkstyle([
+            pattern: 'build/logs/checkstyle.xml'
+        ])
+        pmd([
+            canRunOnFailed: true,
+            pattern: 'build/logs/pmd.xml'
+        ])
+        dry([
+            canRunOnFailed: true,
+            pattern: 'build/logs/pmd-cpd.xml'
+        ])
+    }
+
+    /* if (env.BRANCH_NAME == "deployment") { } */
+
+    stage('Draw Plots') {
+
+        plot([
+            csvFileName: 'plot-a.csv',
+            csvSeries: [[
+                displayTableFlag: false,
+                exclusionValues: 'Lines of Code (LOC), Comment Lines of Code (CLOC), Non-Comment Lines of Code (NCLOC), Logical Lines of Code (LLOC)',
+                file: 'build/logs/phploc.csv',
+                inclusionFlag: 'INCLUDE_BY_STRING',
+                url: ''
+            ]],
+            group: 'phploc',
+            numBuilds: '100',
+            style: 'line',
+            title: 'A - Lines of code',
+            yaxis: 'Lines of Code'
+        ])
+
+        plot([
+            csvFileName: 'plot-b.csv',
+            csvSeries: [[
+                displayTableFlag: false,
+                exclusionValues: 'Directories, Files, Namespaces',
+                file: 'build/logs/phploc.csv',
+                inclusionFlag: 'INCLUDE_BY_STRING',
+                url: ''
+            ]],
+            group: 'phploc',
+            numBuilds: '100',
+            style: 'line',
+            title: 'B - Structures Containers',
+            yaxis: 'Count'
+        ])
+
+        plot([
+            csvFileName: 'plot-c.csv',
+            csvSeries: [[
+                displayTableFlag: false,
+                exclusionValues: 'Average Class Length (LLOC), Average Method Length (LLOC), Average Function Length (LLOC)',
+                file: 'build/logs/phploc.csv',
+                inclusionFlag: 'INCLUDE_BY_STRING',
+                url: ''
+            ]],
+            group: 'phploc',
+            numBuilds: '100',
+            style: 'line',
+            title: 'C - Average Length',
+            yaxis: 'Average Lines of Code'
+        ])
+    }
+
+    stage('Generate API Documentation') {
+        sh 'raml2html docs/api.raml > docs/_output/index.html'
+
+        publishHTML(target: [
+            allowMissing: false,
+            alwaysLinkToLastBuild: false,
+            keepAll: false,
+            reportDir: 'docs/_output/',
+            reportFiles: 'index.html',
+            reportName: 'RAML Documentation',
+            reportTitles: 'RAML Documentation'
+        ])
+    }
+
+    stage('Build Container') {
+        app = docker.build("idco/auth-server")
+    }
+
+    stage ('Run container') {
+        sh 'docker-compose -f docker-compose.yml up --build -d'
+    }
+
+    stage('Running Acceptance Tests') {
+        sh 'ant test-acceptance'
     }
 
     stage('Test & Coverage Reports') {
@@ -47,93 +164,7 @@ node {
         ])
     }
 
-    stage('Code Analyses Reports') {
-        checkstyle([
-            pattern: 'build/logs/checkstyle.xml'
-        ])
-        pmd([
-            canRunOnFailed: true,
-            pattern: 'build/logs/pmd.xml'
-        ])
-        dry([
-            canRunOnFailed: true,
-            pattern: 'build/logs/pmd-cpd.xml'
-        ])
-    }
-
-    /* if (env.BRANCH_NAME == "deployment") { } */
-
-    stage('Draw Plots') {
-
-        plot([
-            csvFileName: 'plot-64172a89-b292-479a-aee3-f3506437f0fc.csv',
-            csvSeries: [[
-                displayTableFlag: false,
-                exclusionValues: 'Lines of Code (LOC), Comment Lines of Code (CLOC), Non-Comment Lines of Code (NCLOC), Logical Lines of Code (LLOC)',
-                file: 'build/logs/phploc.csv',
-                inclusionFlag: 'INCLUDE_BY_STRING',
-                url: ''
-            ]],
-            group: 'phploc',
-            numBuilds: '100',
-            style: 'line',
-            title: 'A - Lines of code',
-            yaxis: 'Lines of Code'
-        ])
-
-        plot([
-            csvFileName: 'plot-64172a89-b292-479a-aee3-f3506437f0fc.csv',
-            csvSeries: [[
-                displayTableFlag: false,
-                exclusionValues: 'Directories, Files, Namespaces',
-                file: 'build/logs/phploc.csv',
-                inclusionFlag: 'INCLUDE_BY_STRING',
-                url: ''
-            ]],
-            group: 'phploc',
-            numBuilds: '100',
-            style: 'line',
-            title: 'B - Structures Containers',
-            yaxis: 'Count'
-        ])
-
-        plot([
-            csvFileName: 'plot-64172a89-b292-479a-aee3-f3506437f0fc.csv',
-            csvSeries: [[
-                displayTableFlag: false,
-                exclusionValues: 'Average Class Length (LLOC), Average Method Length (LLOC), Average Function Length (LLOC)',
-                file: 'build/logs/phploc.csv',
-                inclusionFlag: 'INCLUDE_BY_STRING',
-                url: ''
-            ]],
-            group: 'phploc',
-            numBuilds: '100',
-            style: 'line',
-            title: 'C - Average Length',
-            yaxis: 'Average Lines of Code'
-        ])
-    }
-
-    stage('Generate Documentation') {
-        sh 'raml2html docs/api.raml > docs/_output/index.html'
-
-        publishHTML(target: [
-            allowMissing: false,
-            alwaysLinkToLastBuild: false,
-            keepAll: false,
-            reportDir: 'docs/_output/',
-            reportFiles: 'index.html',
-            reportName: 'RAML Documentation',
-            reportTitles: 'RAML Documentation'
-        ])
-    }
-
-    stage('Build Container') {
-        /* This builds the actual image; synonymous to docker build on the command line */
-        app = docker.build("idco/msidt")
-    }
-
-    stage ('Run container') {
-        sh 'docker-compose -f docker-compose.yml up --build -d'
+    stage ('Cleanup Container') {
+        sh 'docker-compose  -f docker-compose.yml down'
     }
 }

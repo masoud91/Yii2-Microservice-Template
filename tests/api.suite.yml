@@ -2,17 +2,19 @@ actor: ApiTester
 class_name: ApiTester
 
 modules:
-    enabled:
-        - Yii2
-        - REST:
-              url: http://localhost:9090
-              depends: PhpBrowser
-              part: Json
+  enabled:
+    - REST:
+        url: http://localhost:9091
+        depends: Yii2
 
-#coverage:
-#    enabled: true
-#    remote: true
-#    c3_url: 'http://127.0.0.1:9090/index-test.php/'
-#    remote_config: '../codeception.yml'
-#    include:
-#        - controllers/*
+coverage:
+  c3_url: http://localhost:20081/web/index-test.php/
+  enabled: true
+  remote: true
+  remote_config: '../codeception.yml'
+  include:
+    - controllers/*
+    - models/*
+    - components/*
+  exclude:
+    - components/migrations/*

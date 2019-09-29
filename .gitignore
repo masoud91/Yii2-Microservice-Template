@@ -1,7 +1,4 @@
 # yii console commands
-/yii
-/yii_test
-/yii_test.bat
 
 # phpstorm project files
 .idea
@@ -36,6 +33,9 @@ phpunit.phar
 
 composer.lock
 
-/tests/_output
-/runtime
-/web/assets
+tests/_output
+tests/_log
+tests/_data
+
+config/test-local.php
+config/main-local.php
