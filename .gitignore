@@ -39,3 +39,5 @@ tests/_data
 
 config/test-local.php
 config/main-local.php
+runtime/
+web/assets/
