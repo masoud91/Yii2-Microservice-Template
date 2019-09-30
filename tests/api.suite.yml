@@ -4,7 +4,7 @@ class_name: ApiTester
 modules:
   enabled:
     - REST:
-        url: http://localhost:9091
+        url: http://localhost:808
         depends: Yii2
 
 coverage:
