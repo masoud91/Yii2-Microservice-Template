@@ -3,8 +3,6 @@ class_name: UnitTester
 
 modules:
   enabled:
-    - Yii2
-    - Asserts
     - \Helper\Unit
 
 coverage:
@@ -12,3 +10,5 @@ coverage:
   include:
     - models/*
     - components/*
+  exclude:
+    - components/migrations/*

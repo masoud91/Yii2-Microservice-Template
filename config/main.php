@@ -5,6 +5,10 @@ $apiRules = array_merge(
     require(__DIR__ . '/api-rules.php')
 );
 
+$params = array_merge(
+    require(__DIR__ . '/../config/params.php')
+);
+
 return [
     'id' => 'msid',
 
@@ -62,4 +66,6 @@ return [
             ],
         ],
     ],
+
+    'params' => $params,
 ];

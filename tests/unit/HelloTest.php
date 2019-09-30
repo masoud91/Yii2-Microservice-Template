@@ -3,7 +3,7 @@
 use Codeception\Util\Debug;
 use micro\models\Hello;
 
-class HelloApiTest extends \Codeception\Test\Unit
+class HelloTest extends \Codeception\Test\Unit
 {
     /**
      * @var UnitTester
@@ -27,7 +27,7 @@ class HelloApiTest extends \Codeception\Test\Unit
         $model->save();
 
 
-        $I->assertEquals('world', $model->name);
+        $this->assertEquals('world', $model->name);
 
         $I->seeRecord('micro\models\Hello', ['name' => 'world']);
     }
