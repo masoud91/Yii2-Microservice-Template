@@ -20,24 +20,14 @@ node {
     }
 
     stage('Build Application & Run Unit Tests') {
-        /* ws {
-            configFileProvider([configFile(fileId: 'auth_server_test', variable: 'TEST_LOCAL')]) {
-                dir ('config') {
-                    sh 'use $TEST_LOCAL'
-                }
-            }
-        } */
-
         configFileProvider([
-            configFile(fileId: 'auth_server_test', variable: 'TEST_LOCAL')
+            configFile(fileId: 'msid_server_test', variable: 'TEST_LOCAL')
         ]) {
-//             sh 'echo $TEST_LOCAL > config/test-local.php'
             sh 'mv $TEST_LOCAL config/test-local.php'
-//             sh 'use config/test_local.php'
         }
 
-//         sh 'ant full-build'
-        sh 'ant test-unit'
+        sh 'ant full-build'
+//         sh 'ant test-unit'
     }
 
     stage('Code Analyses Reports') {
