@@ -1,12 +1,5 @@
 #!groovy​
 
-def withLocalConfig(body) {
-    withCredentials([
-        [file(credentialsId: 'composer_idco_repo', variable: 'FILE')]
-    ],
-    body)
-}
-
 node {
     def app
 
