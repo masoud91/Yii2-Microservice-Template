@@ -8,7 +8,7 @@ modules:
         depends: Yii2
 
 coverage:
-  c3_url: http://localhost:20081/web/index-test.php/
+  c3_url: http://localhost:808/web/index-test.php/
   enabled: true
   remote: true
   remote_config: '../codeception.yml'

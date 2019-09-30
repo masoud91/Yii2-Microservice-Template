@@ -9,7 +9,7 @@ modules:
     - REST
   config:
     PhpBrowser:
-      url: 'localhost:9090'
+      url: 'localhost:808'
       browser: firefox
     REST:
       depends: PhpBrowser
@@ -18,7 +18,7 @@ modules:
 #coverage:
 #  enabled: true
 #  remote: true
-#  c3_url: 'http://127.0.0.1:9090/index-test.php/'
+#  c3_url: 'http://127.0.0.1:808/index-test.php/'
 #  remote_config: '../codeception.yml'
 #  include:
 #    - models/*
