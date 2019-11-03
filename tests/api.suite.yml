@@ -4,11 +4,11 @@ class_name: ApiTester
 modules:
   enabled:
     - REST:
-        url: http://localhost:808
+        url: http://localhost:20080
         depends: Yii2
 
 coverage:
-  c3_url: http://localhost:808/web/index-test.php/
+  c3_url: http://localhost:20080/index-test.php/
   enabled: true
   remote: true
   remote_config: '../codeception.yml'

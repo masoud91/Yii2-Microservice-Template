@@ -6,21 +6,3 @@ modules:
     - Yii2:
         configFile: 'config/test.php'
         part: [orm]
-    - REST
-  config:
-    PhpBrowser:
-      url: 'localhost:808'
-      browser: firefox
-    REST:
-      depends: PhpBrowser
-      part: Json
-
-#coverage:
-#  enabled: true
-#  remote: true
-#  c3_url: 'http://127.0.0.1:808/index-test.php/'
-#  remote_config: '../codeception.yml'
-#  include:
-#    - models/*
-#    - components/*
-#    - controllers/*

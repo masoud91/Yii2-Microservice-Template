@@ -1,10 +1,30 @@
 # docker-compose.yml
 
-version: '2'
+version: '3.2'
 
 services:
   web:
     build: .
     image: idco/msidt
     ports:
-      - "808:80"
+      - 20080:80
+    environment:
+      - PHP_ENABLE_XDEBUG=0
+
+#  mongodb:
+#    image: mongo
+#    #    environment:
+#    #      - MONGO_INITDB_ROOT_USERNAME=msid
+#    #      - MONGO_INITDB_ROOT_PASSWORD=600602
+#    ports:
+#      - "27070:27017"
+##    volumes:
+##      - ./data/db/mongo:/data/db
+
+#  mysql:
+#    image: mysql:5.7
+#    environment:
+#      - MYSQL_ROOT_PASSWORD=600602
+#      - MYSQL_DATABASE=msid
+#      - MYSQL_USER=msid
+#      - MYSQL_PASSWORD=600602

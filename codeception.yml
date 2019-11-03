@@ -1,23 +1,23 @@
 paths:
-  tests: tests
-  output: tests/_output
-  data: tests/_data
-  support: tests/_support
-  envs: tests/_envs
+    tests: tests
+    output: tests/_output
+    data: tests/_data
+    support: tests/_support
+    envs: tests/_envs
 actor_suffix: Tester
 settings:
-  bootstrap: _bootstrap.php
-  colors: true
-  memory_limit: 1024M
-  strict_xml: true
+    bootstrap: _bootstrap.php
+    colors: true
+    memory_limit: 1024M
+    strict_xml: true
 extensions:
-  enabled:
-    - Codeception\Extension\RunFailed
+    enabled:
+        - Codeception\Extension\RunFailed
 modules:
-  config:
-    Yii2:
-      configFile: 'config/test.php'
-  enabled:
-    - Yii2:
-        part: [orm, email, fixtures]
-    - Asserts
+    config:
+        Yii2:
+            configFile: 'config/test.php'
+    enabled:
+        - Yii2:
+              part: [orm, email, fixtures]
+        - Asserts
