@@ -1,29 +1,28 @@
 #!groovy​
 
 node {
-    def app
+    def appImage
 
     stage('Clone repository') {
         /* Let's make sure we have the repository cloned to our workspace */
+        cleanWs()
         checkout scm
     }
 
-    stage('Update Project Libraries') {
+    stage('config project & install Libraries') {
         sh 'composer install'
-    }
-
-    stage('Build Application & Run Unit Tests') {
         configFileProvider([
-            configFile(fileId: 'msid_server_test', variable: 'TEST_LOCAL')
+            configFile(fileId: 'msid_comment_test', variable: 'TEST_LOCAL'),
+            configFile(fileId: 'msid_comment_main', variable: 'MAIN_LOCAL'),
         ]) {
             sh 'mv $TEST_LOCAL config/test-local.php'
+            sh 'mv $MAIN_LOCAL config/main-local.php'
+            sh 'chmod 775 config/main-local.php config/test-local.php'
         }
-
-        sh 'ant full-build'
-//         sh 'ant test-unit'
     }
 
-    stage('Code Analyses Reports') {
+    stage('code quality & Report') {
+        sh 'ant static-analysis'
         checkstyle([
             pattern: 'build/logs/checkstyle.xml'
         ])
@@ -35,11 +34,6 @@ node {
             canRunOnFailed: true,
             pattern: 'build/logs/pmd-cpd.xml'
         ])
-    }
-
-    /* if (env.BRANCH_NAME == "deployment") { } */
-
-    stage('Draw Plots') {
 
         plot([
             csvFileName: 'plot-a.csv',
@@ -90,40 +84,19 @@ node {
         ])
     }
 
-    stage('Generate API Documentation') {
-        sh 'raml2html docs/api.raml > docs/_output/index.html'
-
-        publishHTML(target: [
-            allowMissing: false,
-            alwaysLinkToLastBuild: false,
-            keepAll: false,
-            reportDir: 'docs/_output/',
-            reportFiles: 'index.html',
-            reportName: 'RAML Documentation',
-            reportTitles: 'RAML Documentation'
-        ])
-    }
-
-    stage('Build Container') {
-        app = docker.build("idco/auth-server")
-    }
-
-    stage ('Run container') {
-        sh 'docker-compose -f docker-compose.yml up --build -d'
-    }
-
-    stage('Running Acceptance Tests') {
-        sh 'ant test-acceptance'
-    }
+    /* if (env.BRANCH_NAME == "deployment") { } */
 
     stage('Test & Coverage Reports') {
+        sh 'ant test-unit'
+        sh 'ant test-acceptance'
+
         step([
             $class: 'CloverPublisher',
             cloverReportDir: 'tests/_output/',
             cloverReportFileName: 'coverage.xml',
-            healthyTarget: [methodCoverage: 70, conditionalCoverage: 80, statementCoverage: 80], // optional, default is: method=70, conditional=80, statement=80
-            unhealthyTarget: [methodCoverage: 50, conditionalCoverage: 50, statementCoverage: 50], // optional, default is none
-            failingTarget: [methodCoverage: 0, conditionalCoverage: 0, statementCoverage: 0] // optional, default is none
+            healthyTarget: [methodCoverage: 70, conditionalCoverage: 80, statementCoverage: 80],
+            unhealthyTarget: [methodCoverage: 50, conditionalCoverage: 50, statementCoverage: 50],
+            failingTarget: [methodCoverage: 0, conditionalCoverage: 0, statementCoverage: 0]
         ])
 
         publishHTML(target: [
@@ -147,7 +120,43 @@ node {
         ])
     }
 
-    stage ('Cleanup Container') {
-        sh 'docker-compose  -f docker-compose.yml down'
+    stage('Generate API Documentation') {
+        sh 'raml2html docs/api.raml > docs/_output/index.html'
+
+        publishHTML(target: [
+            allowMissing: false,
+            alwaysLinkToLastBuild: false,
+            keepAll: false,
+            reportDir: 'docs/_output/',
+            reportFiles: 'index.html',
+            reportName: 'RAML Documentation',
+            reportTitles: 'RAML Documentation'
+        ])
     }
+
+    try {
+        stage('Build Container') {
+//             sh 'mkdir data'
+            appImage = docker.build("idco/msid")
+        }
+
+        stage ('Run container') {
+            sh 'docker-compose  -f docker-compose.yml up -d'
+            sleep(time:60, unit:"SECONDS")
+        }
+
+        stage('Running Integration Tests') {
+            sh 'ant behat'
+        }
+
+        stage ('Cleanup Container') {
+            sh 'docker-compose -f docker-compose.yml down'
+        }
+
+    } catch (Exception ex) {
+        stage ('Cleanup Container') {
+            sh 'docker-compose -f docker-compose.yml down'
+        }
+    }
+
 }

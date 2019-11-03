@@ -11,13 +11,14 @@
     <property name="yii" value="${basedir}/yii_test"/>
     <property name="behat" value="${basedir}/vendor/bin/behat"/>
 
-    <target name="full-build" depends="prepare,static-analysis,migration,unit" description="Performs static analysis, runs the tests, and generates project documentation"/>
-    <target name="full-build-parallel" depends="prepare,static-analysis-parallel,unit" description="Performs static analysis (executing the tools in parallel), runs the tests, and generates project documentation"/>
+    <!--    <target name="full-build" depends="prepare,static-analysis,test-unit,test-acceptance" description="Performs static analysis, runs the tests, and generates project documentation"/>-->
+    <target name="full-build" depends="prepare,static-analysis" description="Performs static analysis, runs the tests, and generates project documentation"/>
+    <target name="full-build-parallel" depends="prepare,static-analysis-parallel,test-full" description="Performs static analysis (executing the tools in parallel), runs the tests, and generates project documentation"/>
     <target name="quick-build" depends="prepare,lint" description="Performs a lint check and runs the tests (without generating code coverage reports)"/>
-    <target name="static-analysis" depends="lint,phploc-ci,pdepend,phpmd-ci,phpcbf,phpcs-ci,phpcpd-ci" description="Performs static analysis"/>
-    <target name="test-unit" depends="prepare,migration,unit" description="Performs a lint check and runs the tests (without generating code coverage reports)"/>
-    <target name="test-acceptance" depends="prepare,migration,acceptance" description="Performs a lint check and runs the tests (without generating code coverage reports)"/>
-    <target name="test-full" depends="prepare,migration,unit,acceptance" description="Performs a lint check and runs the tests (without generating code coverage reports)"/>
+    <target name="static-analysis" depends="lint,phpcbf,phploc-ci,pdepend,phpmd-ci,phpcs-ci,phpcpd-ci" description="Performs static analysis"/>
+    <target name="test-unit" depends="migration,unit" description="running unit tests"/>
+    <target name="test-acceptance" depends="migration,acceptance" description="running acceptance tests"/>
+    <target name="test-full" depends="test-unit,test-acceptance" description="running unit and acceptance tests"/>
 
     <!--
      Adjust the threadCount attribute's value to the number of CPUs
@@ -27,12 +28,12 @@
             <sequential>
                 <antcall target="pdepend"/>
                 <antcall target="phpmd-ci"/>
+                <antcall target="phpcbf"/>
             </sequential>
-            <antcall target="lint"/>
-            <antcall target="phpcpd-ci"/>
-            <antcall target="phpcbf"/>
             <antcall target="phpcs-ci"/>
             <antcall target="phploc-ci"/>
+            <antcall target="lint"/>
+            <antcall target="phpcpd-ci"/>
         </parallel>
     </target>
 
@@ -137,7 +138,7 @@
 
     <target name="phpcbf" description="To automatically fix (fixable) coding style violations">
         <exec executable="${phpcbf}" taskname="phpcbf">
-            <arg value="--standard=build/phpcs.xml"/>
+            <!--            <arg value="&#45;&#45;standard=build/phpcs.xml"/>-->
             <arg path="${basedir}/components"/>
             <arg path="${basedir}/controllers"/>
             <arg path="${basedir}/models"/>
@@ -197,11 +198,11 @@
     </target>
 
     <target name="migration" description="Run Migrations">
-        <exec executable="${yii}" failonerror="true" taskname="acceptance">
+        <exec executable="${yii}" failonerror="true" taskname="migration-down">
             <arg value="mongodb-migrate/down"/>
             <arg value="--interactive=0"/>
         </exec>
-        <exec executable="${yii}" failonerror="true" taskname="acceptance">
+        <exec executable="${yii}" failonerror="true" taskname="migration-up">
             <arg value="mongodb-migrate/up"/>
             <arg value="--interactive=0"/>
         </exec>
@@ -215,6 +216,7 @@
             <arg value="--xml"/>
             <arg value="--coverage-xml"/>
             <arg value="--coverage-html"/>
+            <arg value="--steps"/>
         </exec>
     </target>
 
@@ -229,9 +231,10 @@
         </exec>
     </target>
 
-    <!--<target name="behat" description="Run Behat Scenarios">
+    <target name="behat" description="Run Behat Scenarios">
         <exec executable="${behat}" failonerror="true">
-            <arg value="&#45;&#45;config=${basedir}/build/behat.yml" />
+            <arg value="--config=${basedir}/build/behat.yml" />
+            <arg value="--verbose" />
         </exec>
-    </target>-->
+    </target>
 </project>
