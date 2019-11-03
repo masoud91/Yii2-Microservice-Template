@@ -1,8 +1,10 @@
 #behat.yml
 default:
   autoload:
-    - %paths.base%/../tests/features/bootstrap/
+    '': '%paths.base%/../tests/features/bootstrap/'
   suites:
     default:
       paths:
-        - %paths.base%/../tests/features
+        '': '%paths.base%/../tests/features'
+  gherkin:
+    cache: ~

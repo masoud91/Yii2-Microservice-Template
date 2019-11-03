@@ -17,3 +17,7 @@ modules:
     config:
         Yii2:
             configFile: 'config/test.php'
+    enabled:
+        - Yii2:
+              part: [orm, email, fixtures]
+        - Asserts

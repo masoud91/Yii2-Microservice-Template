@@ -26,7 +26,11 @@
         "sebastian/phpcpd": "^4.1",
         "codeception/codeception": "^3.0",
         "squizlabs/php_codesniffer": "3.*",
-        "edsonmedina/php_testability": "dev-master"
+        "edsonmedina/php_testability": "dev-master",
+        "yiisoft/yii2-debug": "~2.0.0",
+        "yiisoft/yii2-gii": "~2.0.0",
+        "yiisoft/yii2-faker": "~2.0.0",
+        "behat/behat": "^3.3"
     },
     "repositories": [
         {
