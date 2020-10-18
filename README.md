@@ -1,12 +1,12 @@
 # OAuth MicroService
 This micro service is in charge of generating and verifying OAuth Tokens.
 
-####Here is setup TODO:
+#### Here is setup TODO:
 
-#####1- Change baseUri port number in docs/api.raml
+##### 1- Change baseUri port number in docs/api.raml
 Use naming convention of 30XXX start From 30081 and increase the number for each service.
 
-#####2- Enable debug 
+##### 2- Enable debug 
 - create `runtime` folder in project root with chmod of `775`.
 - add the following lines in `config/main-local.php`.
 ```
